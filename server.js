@@ -96,7 +96,7 @@ http.createServer(async (req, res) => {
 
   // --- בדיקת חסימה ---
   const bans = loadBans();
-  if (bans.includes(ip) && !url.startsWith('/api/auth/logout')) {
+  if (bans.includes(ip) && url !== '/api/login' && !url.startsWith('/api/auth/logout')) {
       return send(res, 403, { error: 'הנך חסום מהאתר. פנה למנהל.' });
   }
 
