@@ -8,7 +8,7 @@ const PUB = path.join(__dirname, 'public');
 const UPLOADS_DIR = path.join(__dirname, 'data', 'uploads');
 
 // סיסמת מנהל (שנה אותה כאן!)
-const ADMIN_PASSWORD = 'joker123'; 
+const ADMIN_PASSWORD = 'bibiandbengvirontop1234 '; 
 
 if (!fs.existsSync(UPLOADS_DIR)) fs.mkdirSync(UPLOADS_DIR, { recursive: true });
 if (!fs.existsSync(DB_TICKETS)) fs.writeFileSync(DB_TICKETS, '[]');
