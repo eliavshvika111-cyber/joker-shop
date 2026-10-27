@@ -23,13 +23,13 @@ cloudinary.config({
 // סיסמת מנהל
 const ADMIN_PASSWORD = 'nougatil2011'; 
 const sessions = new Map(); 
-const rate = new Map();
-function limited(req) {
-  const ip = (req.headers['x-forwarded-for'] || req.socket.remoteAddress || '').split(',')[0].trim();
-  const now = Date.now(), arr = (rate.get(ip) || []).filter(t => now - t < 3600e3);
-  if (arr.length >= 5) return true;
-  arr.push(now); rate.set(ip, arr); return false;
-}
+
+// === הגדרות חסימה ===
+const DB_BANS = path.join(__dirname, 'data', 'bans.json');
+if (!fs.existsSync(path.join(__dirname, 'data'))) fs.mkdirSync(path.join(__dirname, 'data'), { recursive: true });
+if (!fs.existsSync(DB_BANS)) fs.writeFileSync(DB_BANS, '[]');
+const loadBans = () => { try { return JSON.parse(fs.readFileSync(DB_BANS, 'utf8')); } catch { return []; } };
+const saveBans = d => fs.writeFileSync(DB_BANS, JSON.stringify(d, null, 2));
 
 // התחברות ל-MongoDB
 const client = new MongoClient(MONGODB_URI, {
@@ -61,6 +61,13 @@ http.createServer(async (req, res) => {
   const sessionId = authHeader ? authHeader.replace('Bearer ', '') : null;
   const user = sessionId ? sessions.get(sessionId) : null;
 
+  // --- בדיקת חסימה (חשוב!) ---
+  const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+  const bans = loadBans();
+  if (bans.includes(ip) && !url.startsWith('/api/auth/logout')) {
+      return send(res, 403, { error: 'הנך חסום מהאתר. פנה למנהל.' });
+  }
+
   // --- התחברות מנהל ---
   if (url === '/api/login' && req.method === 'POST') {
     const d = await new Promise(r => { let b = ''; req.on('data', c => b += c); req.on('end', () => { try { r(JSON.parse(b)); } catch { r({}); } }); });
@@ -76,6 +83,34 @@ http.createServer(async (req, res) => {
       return send(res, 200, user || { isAdmin: false });
   }
 
+  // --- API Bans (חדש!) ---
+  if (url === '/api/bans' && req.method === 'GET') {
+    if (!user || !user.isAdmin) return send(res, 401, { error: 'אין הרשאה' });
+    return send(res, 200, loadBans());
+  }
+
+  if (url === '/api/bans' && req.method === 'POST') {
+    if (!user || !user.isAdmin) return send(res, 401, { error: 'אין הרשאה' });
+    const d = await new Promise(r => { let b = ''; req.on('data', c => b += c); req.on('end', () => { try { r(JSON.parse(b)); } catch { r({}); } }); });
+    if (!d.ip) return send(res, 400, { error: 'חסר IP' });
+    
+    const bans = loadBans();
+    if (!bans.includes(d.ip)) {
+        bans.push(d.ip);
+        saveBans(bans);
+    }
+    return send(res, 200, { ok: true });
+  }
+
+  if (url.startsWith('/api/bans/') && req.method === 'DELETE') {
+    if (!user || !user.isAdmin) return send(res, 401, { error: 'אין הרשאה' });
+    const ipToRemove = url.split('/')[3];
+    let bans = loadBans();
+    bans = bans.filter(b => b !== ipToRemove);
+    saveBans(bans);
+    return send(res, 200, { ok: true });
+  }
+
   // --- API Items ---
   if (url === '/api/items' && req.method === 'GET') {
     if (!itemsCollection) return send(res, 500, { error: 'DB not ready' });
@@ -84,14 +119,11 @@ http.createServer(async (req, res) => {
   }
 
   if (url === '/api/items' && req.method === 'POST') {
-    const isAdminUser = user && user.isAdmin;
-    if (!isAdminUser && limited(req)) return send(res, 429, { error: 'יותר מדי העלאות, נסה שוב בעוד שעה' });
+    if (!user || !user.isAdmin) return send(res, 401, { error: 'אין הרשאה' });
     const d = await new Promise(r => { let b = ''; req.on('data', c => { b += c; if (b.length > 10e6) req.destroy(); }); req.on('end', () => { try { r(JSON.parse(b)); } catch { r({}); } }); });
 
     if (!d.title || !d.category) return send(res, 400, { error: 'חסרים נתונים' });
     if (!d.link) return send(res, 400, { error: 'חייב לשים קישור להורדה' });
-    if (!/^https?:\/\//i.test(d.link)) return send(res, 400, { error: 'קישור לא תקין' });
-    if (d.videoLink && !/^https?:\/\//i.test(d.videoLink)) d.videoLink = '';
     
     let image = '';
     if (d.image) {
