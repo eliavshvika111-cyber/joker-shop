@@ -123,8 +123,19 @@
         box-shadow: 0 4px 20px rgba(0,0,0,0.5);
     }
     .card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(255,255,255,0.1); }
-    .pic { aspect-ratio: 16/9; background: #000 center/cover; filter: grayscale(30%); transition: 0.3s; }
+    
+    /* --- תיקון התמונה בכרטיס --- */
+    .pic { 
+        aspect-ratio: 16/9; 
+        background-color: #000; 
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: contain; /* התמונה תוצג בשלמותה בלי להיחתך */
+        filter: grayscale(30%); transition: 0.3s; 
+        border-bottom: 1px solid #222;
+    }
     .card:hover .pic { filter: grayscale(0%); }
+
     .in { padding: 1.5rem; display: flex; flex-direction: column; gap: 0.8rem; flex: 1; }
     .tag { align-self: flex-start; font-size: 0.75rem; font-weight: 900; color: var(--accent); background: rgba(255,255,255,0.1); border-radius: 4px; padding: 0.2rem 0.6rem; }
     .card h3 { font-size: 1.2rem; color: #fff; font-weight: 900; }
@@ -166,7 +177,16 @@
     #msg { color: var(--accent); font-weight: 700; text-align: center; }
 
     .item-panel { width: min(650px, 95%); padding: 0; overflow: hidden; gap: 0; }
-    .item-image { height: 350px; background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center; background-color: #000; }
+    
+    /* --- תיקון התמונה בחלון הפופאפ --- */
+    .item-image { 
+        height: 350px; 
+        background-color: #000; 
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: contain; /* התמונה תוצג בשלמותה */
+        display: flex; align-items: center; justify-content: center; 
+    }
     .item-image iframe { width: 100%; height: 100%; border: none; }
     .item-details { padding: 2rem; display: flex; flex-direction: column; gap: 1.2rem; }
     .item-details h2 { font-size: 2rem; font-family: 'Rubik Wet Paint', cursive; }
@@ -285,7 +305,7 @@
 
 <header class="top">
     <div class="brand"><img src="joker.webp" alt=""><h1>JOKER<span>-SHOP</span></h1></div>
-    <p class="slogan">JOKERSHOP</p>
+    <p class="slogan">סקריפטים, מפות, בגדים ורכבים ל-FiveM</p>
     <div style="display:flex; gap:10px;">
         <button id="adminBtn" class="ghost" onclick="openLoginModal()">התחברות מנהל</button>
     </div>
@@ -315,7 +335,7 @@
             <img src="joker.webp" alt="Joker">
             <h2>ברוכים הבאים ל-JOKER SHOP</h2>
             <p>המקום הטוב ביותר למצוא סקריפטים, מפות, רכבים ובגדים לשרת ה-FiveM שלך. הכל בחינם, בלחיצת כפתור. אנחנו מעדכנים את המלאי שלנו כל יום כדי שתוכלו לבנות את השרת המושלם.</p>
-            <a href="https://discord.gg/y8ankneSDh" target="_blank" class="home-btn">הצטרף לשרת הדיסקורד שלנו</a>
+            <a href="https://discord.gg/YOUR_INVITE_LINK" target="_blank" class="home-btn">הצטרף לשרת הדיסקורד שלנו</a>
         </section>
 
         <section id="grid" class="grid" style="display:none;"></section>
