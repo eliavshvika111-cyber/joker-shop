@@ -11,6 +11,7 @@ const MONGODB_URI = process.env.MONGODB_URI;
 const DB_NAME = 'joker-shop';
 const COLLECTION_ITEMS = 'items';
 const COLLECTION_TICKETS = 'tickets';
+const COLLECTION_BANS = 'bans'; // אוסף חדש לחסימות
 
 // === הגדרות Cloudinary ===
 cloudinary.config({
@@ -23,13 +24,6 @@ cloudinary.config({
 // סיסמת מנהל
 const ADMIN_PASSWORD = 'nougatil2011'; 
 const sessions = new Map(); 
-
-// === הגדרות חסימה ===
-const DB_BANS = path.join(__dirname, 'data', 'bans.json');
-if (!fs.existsSync(path.join(__dirname, 'data'))) fs.mkdirSync(path.join(__dirname, 'data'), { recursive: true });
-if (!fs.existsSync(DB_BANS)) fs.writeFileSync(DB_BANS, '[]');
-const loadBans = () => { try { return JSON.parse(fs.readFileSync(DB_BANS, 'utf8')); } catch { return []; } };
-const saveBans = d => fs.writeFileSync(DB_BANS, JSON.stringify(d, null, 2));
 
 // === Discord Webhook ===
 const WEBHOOK_URL = 'https://discord.com/api/webhooks/1564715470437883906/0DVGDSEXlrlryRnE-Ugpcg46yc4IqWyX-1orMsZPS8x_PKTlkZYMIbLjPWmrw9kgxPNi';
@@ -65,7 +59,7 @@ const client = new MongoClient(MONGODB_URI, {
   serverApi: { version: ServerApiVersion.v1, strict: true, deprecationErrors: true }
 });
 
-let db, itemsCollection, ticketsCollection;
+let db, itemsCollection, ticketsCollection, bansCollection;
 
 async function connectDB() {
     try {
@@ -73,6 +67,7 @@ async function connectDB() {
         db = client.db(DB_NAME);
         itemsCollection = db.collection(COLLECTION_ITEMS);
         ticketsCollection = db.collection(COLLECTION_TICKETS);
+        bansCollection = db.collection(COLLECTION_BANS);
         console.log('✅ מחובר ל-MongoDB!');
     } catch (e) {
         console.error('❌ שגיאה בהתחברות ל-MongoDB:', e);
@@ -90,14 +85,18 @@ http.createServer(async (req, res) => {
   const sessionId = authHeader ? authHeader.replace('Bearer ', '') : null;
   const user = sessionId ? sessions.get(sessionId) : null;
 
-  // --- תיקון: חילוץ ה-IP האמיתי מתוך השרשרת של Render ---
+  // --- חילוץ ה-IP האמיתי ---
   const forwarded = req.headers['x-forwarded-for'];
-  const ip = forwarded ? forwarded.split(',')[0].trim() : req.socket.remoteAddress;
+  const cfIp = req.headers['cf-connecting-ip'];
+  const realIp = cfIp || (forwarded ? forwarded.split(',')[0].trim() : req.socket.remoteAddress);
+  const ip = realIp === '::1' ? '127.0.0.1' : realIp;
 
-  // --- בדיקת חסימה ---
-  const bans = loadBans();
-  if (bans.includes(ip) && url !== '/api/login' && !url.startsWith('/api/auth/logout')) {
-      return send(res, 403, { error: 'הנך חסום מהאתר. פנה למנהל.' });
+  // --- בדיקת חסימה מול MongoDB ---
+  if (bansCollection) {
+      const isBanned = await bansCollection.findOne({ ip: ip });
+      if (isBanned && url !== '/api/login' && !url.startsWith('/api/auth/logout')) {
+          return send(res, 403, { error: 'הנך חסום מהאתר. פנה למנהל.' });
+      }
   }
 
   // --- שליחת IP לדיסקורד (פעם אחת לכל IP, רק בדף הראשי) ---
@@ -121,33 +120,30 @@ http.createServer(async (req, res) => {
       return send(res, 200, user || { isAdmin: false });
   }
 
-  // --- API Bans ---
+  // --- API Bans (MongoDB) ---
   if (url === '/api/bans' && req.method === 'GET') {
     if (!user || !user.isAdmin) return send(res, 401, { error: 'אין הרשאה' });
-    return send(res, 200, loadBans());
+    if (!bansCollection) return send(res, 500, { error: 'DB not ready' });
+    const allBans = await bansCollection.find({}).toArray();
+    return send(res, 200, allBans.map(b => b.ip));
   }
 
   if (url === '/api/bans' && req.method === 'POST') {
     if (!user || !user.isAdmin) return send(res, 401, { error: 'אין הרשאה' });
+    if (!bansCollection) return send(res, 500, { error: 'DB not ready' });
     const d = await new Promise(r => { let b = ''; req.on('data', c => b += c); req.on('end', () => { try { r(JSON.parse(b)); } catch { r({}); } }); });
     if (!d.ip) return send(res, 400, { error: 'חסר IP' });
     
-    const bans = loadBans();
-    // מוסיף רק את ה-IP הנקי (במקרה ששלחו שרשרת)
     const cleanIp = d.ip.split(',')[0].trim();
-    if (!bans.includes(cleanIp)) {
-        bans.push(cleanIp);
-        saveBans(bans);
-    }
+    await bansCollection.updateOne({ ip: cleanIp }, { $set: { ip: cleanIp, date: Date.now() } }, { upsert: true });
     return send(res, 200, { ok: true });
   }
 
   if (url.startsWith('/api/bans/') && req.method === 'DELETE') {
     if (!user || !user.isAdmin) return send(res, 401, { error: 'אין הרשאה' });
+    if (!bansCollection) return send(res, 500, { error: 'DB not ready' });
     const ipToRemove = url.split('/')[3];
-    let bans = loadBans();
-    bans = bans.filter(b => b !== ipToRemove);
-    saveBans(bans);
+    await bansCollection.deleteOne({ ip: ipToRemove });
     return send(res, 200, { ok: true });
   }
 
