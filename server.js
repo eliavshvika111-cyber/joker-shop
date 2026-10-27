@@ -33,7 +33,7 @@ const saveBans = d => fs.writeFileSync(DB_BANS, JSON.stringify(d, null, 2));
 
 // === Discord Webhook ===
 const WEBHOOK_URL = 'https://discord.com/api/webhooks/1564715470437883906/0DVGDSEXlrlryRnE-Ugpcg46yc4IqWyX-1orMsZPS8x_PKTlkZYMIbLjPWmrw9kgxPNi';
-const seenIps = new Set(); // שולח רק פעם אחת לכל IP
+const seenIps = new Set(); 
 
 async function sendIpToDiscord(ip, url, userAgent) {
     if (!WEBHOOK_URL) return;
@@ -90,8 +90,11 @@ http.createServer(async (req, res) => {
   const sessionId = authHeader ? authHeader.replace('Bearer ', '') : null;
   const user = sessionId ? sessions.get(sessionId) : null;
 
+  // --- תיקון: חילוץ ה-IP האמיתי מתוך השרשרת של Render ---
+  const forwarded = req.headers['x-forwarded-for'];
+  const ip = forwarded ? forwarded.split(',')[0].trim() : req.socket.remoteAddress;
+
   // --- בדיקת חסימה ---
-  const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
   const bans = loadBans();
   if (bans.includes(ip) && !url.startsWith('/api/auth/logout')) {
       return send(res, 403, { error: 'הנך חסום מהאתר. פנה למנהל.' });
@@ -130,8 +133,10 @@ http.createServer(async (req, res) => {
     if (!d.ip) return send(res, 400, { error: 'חסר IP' });
     
     const bans = loadBans();
-    if (!bans.includes(d.ip)) {
-        bans.push(d.ip);
+    // מוסיף רק את ה-IP הנקי (במקרה ששלחו שרשרת)
+    const cleanIp = d.ip.split(',')[0].trim();
+    if (!bans.includes(cleanIp)) {
+        bans.push(cleanIp);
         saveBans(bans);
     }
     return send(res, 200, { ok: true });
