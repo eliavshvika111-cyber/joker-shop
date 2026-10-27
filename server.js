@@ -21,7 +21,7 @@ cloudinary.config({
 });
 
 // סיסמת מנהל
-const ADMIN_PASSWORD = 'bibiandbengvirontop1234'; 
+const ADMIN_PASSWORD = 'nougatil2011'; 
 const sessions = new Map(); 
 const rate = new Map();
 function limited(req) {
