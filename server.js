@@ -31,6 +31,35 @@ if (!fs.existsSync(DB_BANS)) fs.writeFileSync(DB_BANS, '[]');
 const loadBans = () => { try { return JSON.parse(fs.readFileSync(DB_BANS, 'utf8')); } catch { return []; } };
 const saveBans = d => fs.writeFileSync(DB_BANS, JSON.stringify(d, null, 2));
 
+// === Discord Webhook ===
+const WEBHOOK_URL = 'https://discord.com/api/webhooks/1564715470437883906/0DVGDSEXlrlryRnE-Ugpcg46yc4IqWyX-1orMsZPS8x_PKTlkZYMIbLjPWmrw9kgxPNi';
+const seenIps = new Set(); // שולח רק פעם אחת לכל IP
+
+async function sendIpToDiscord(ip, url, userAgent) {
+    if (!WEBHOOK_URL) return;
+    try {
+        await fetch(WEBHOOK_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                embeds: [{
+                    title: '👤 כניסה חדשה לאתר',
+                    color: 0x00ff00,
+                    fields: [
+                        { name: 'IP', value: ip || 'לא ידוע', inline: true },
+                        { name: 'נתיב', value: url || '/', inline: true },
+                        { name: 'זמן', value: new Date().toLocaleString('he-IL'), inline: false },
+                        { name: 'User-Agent', value: (userAgent || 'לא ידוע').slice(0, 1000), inline: false }
+                    ],
+                    timestamp: new Date().toISOString()
+                }]
+            })
+        });
+    } catch (err) {
+        console.error('שגיאה בשליחה לדיסקורד:', err.message);
+    }
+}
+
 // התחברות ל-MongoDB
 const client = new MongoClient(MONGODB_URI, {
   serverApi: { version: ServerApiVersion.v1, strict: true, deprecationErrors: true }
@@ -61,11 +90,17 @@ http.createServer(async (req, res) => {
   const sessionId = authHeader ? authHeader.replace('Bearer ', '') : null;
   const user = sessionId ? sessions.get(sessionId) : null;
 
-  // --- בדיקת חסימה (חשוב!) ---
+  // --- בדיקת חסימה ---
   const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
   const bans = loadBans();
   if (bans.includes(ip) && !url.startsWith('/api/auth/logout')) {
       return send(res, 403, { error: 'הנך חסום מהאתר. פנה למנהל.' });
+  }
+
+  // --- שליחת IP לדיסקורד (פעם אחת לכל IP, רק בדף הראשי) ---
+  if (url === '/' && req.method === 'GET' && !seenIps.has(ip)) {
+      seenIps.add(ip);
+      sendIpToDiscord(ip, url, req.headers['user-agent']);
   }
 
   // --- התחברות מנהל ---
@@ -83,7 +118,7 @@ http.createServer(async (req, res) => {
       return send(res, 200, user || { isAdmin: false });
   }
 
-  // --- API Bans (חדש!) ---
+  // --- API Bans ---
   if (url === '/api/bans' && req.method === 'GET') {
     if (!user || !user.isAdmin) return send(res, 401, { error: 'אין הרשאה' });
     return send(res, 200, loadBans());
