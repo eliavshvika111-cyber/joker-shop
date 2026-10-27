@@ -307,6 +307,7 @@
     <div class="brand"><img src="joker.webp" alt=""><h1>JOKER<span>-SHOP</span></h1></div>
     <p class="slogan">סקריפטים, מפות, בגדים ורכבים ל-FiveM</p>
     <div style="display:flex; gap:10px;">
+        <button id="uploadBtn" class="ghost" onclick="openAddModal()">העלאת קובץ</button>
         <button id="adminBtn" class="ghost" onclick="openLoginModal()">התחברות מנהל</button>
     </div>
 </header>
@@ -420,6 +421,7 @@
       .then(user => {
         if (user && user.isAdmin) {
             isAdmin = true;
+            $('uploadBtn').style.display = 'none';
             $('adminBtn').textContent = 'הוסף מוצר';
             $('adminBtn').onclick = openAddModal;
             $('navHistory').style.display = 'flex';
