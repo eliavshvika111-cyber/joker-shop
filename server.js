@@ -23,6 +23,13 @@ cloudinary.config({
 // סיסמת מנהל
 const ADMIN_PASSWORD = 'bibiandbengvirontop1234'; 
 const sessions = new Map(); 
+const rate = new Map();
+function limited(req) {
+  const ip = (req.headers['x-forwarded-for'] || req.socket.remoteAddress || '').split(',')[0].trim();
+  const now = Date.now(), arr = (rate.get(ip) || []).filter(t => now - t < 3600e3);
+  if (arr.length >= 5) return true;
+  arr.push(now); rate.set(ip, arr); return false;
+}
 
 // התחברות ל-MongoDB
 const client = new MongoClient(MONGODB_URI, {
@@ -77,11 +84,14 @@ http.createServer(async (req, res) => {
   }
 
   if (url === '/api/items' && req.method === 'POST') {
-    if (!user || !user.isAdmin) return send(res, 401, { error: 'אין הרשאה' });
+    const isAdminUser = user && user.isAdmin;
+    if (!isAdminUser && limited(req)) return send(res, 429, { error: 'יותר מדי העלאות, נסה שוב בעוד שעה' });
     const d = await new Promise(r => { let b = ''; req.on('data', c => { b += c; if (b.length > 10e6) req.destroy(); }); req.on('end', () => { try { r(JSON.parse(b)); } catch { r({}); } }); });
 
     if (!d.title || !d.category) return send(res, 400, { error: 'חסרים נתונים' });
     if (!d.link) return send(res, 400, { error: 'חייב לשים קישור להורדה' });
+    if (!/^https?:\/\//i.test(d.link)) return send(res, 400, { error: 'קישור לא תקין' });
+    if (d.videoLink && !/^https?:\/\//i.test(d.videoLink)) d.videoLink = '';
     
     let image = '';
     if (d.image) {
