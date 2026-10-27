@@ -1,0 +1,1 @@
+{"name":"joker-shop","version":"1.0.0","main":"server.js","scripts":{"start":"node server.js"},"dependencies":{"discord.js":"^14.27.0"}}
