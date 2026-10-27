@@ -94,7 +94,7 @@ http.createServer(async (req, res) => {
   // --- בדיקת חסימה מול MongoDB ---
   if (bansCollection) {
       const isBanned = await bansCollection.findOne({ ip: ip });
-      if (isBanned && url !== '/api/login' && !url.startsWith('/api/auth/logout')) {
+      if (isBanned && url !== '/api/login' && !url.startsWith('/api/auth/logout') && !url.startsWith('/api/bans')) {
           return send(res, 403, { error: 'הנך חסום מהאתר. פנה למנהל.' });
       }
   }
