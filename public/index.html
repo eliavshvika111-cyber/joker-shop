@@ -124,13 +124,12 @@
     }
     .card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(255,255,255,0.1); }
     
-    /* --- תיקון התמונה בכרטיס --- */
     .pic { 
         aspect-ratio: 16/9; 
         background-color: #000; 
         background-repeat: no-repeat;
         background-position: center center;
-        background-size: contain; /* התמונה תוצג בשלמותה בלי להיחתך */
+        background-size: contain; 
         filter: grayscale(30%); transition: 0.3s; 
         border-bottom: 1px solid #222;
     }
@@ -143,18 +142,11 @@
     .open-item-btn { text-align: center; background: var(--primary); color: #fff; border: none; font-weight: 700; padding: 0.8rem; border-radius: 8px; transition: 0.3s; cursor: pointer; width: 100%; }
     .card:hover .open-item-btn { background: var(--primary-hover); }
 
-    /* כפתורי ניהול על כרטיס */
-    .admin-card-actions {
-        position: absolute; top: 10px; left: 10px; display: flex; gap: 8px; z-index: 5;
-    }
-    .admin-card-actions button {
-        background: rgba(0,0,0,0.8); color: #fff; border: none; border-radius: 6px;
-        padding: 6px 10px; cursor: pointer; font-size: 0.9rem; transition: 0.2s;
-    }
+    .admin-card-actions { position: absolute; top: 10px; left: 10px; display: flex; gap: 8px; z-index: 5; }
+    .admin-card-actions button { background: rgba(0,0,0,0.8); color: #fff; border: none; border-radius: 6px; padding: 6px 10px; cursor: pointer; font-size: 0.9rem; transition: 0.2s; }
     .admin-card-actions button:hover { background: #fff; color: #000; }
     .admin-card-actions button.del:hover { background: #ff4d4d; color: #fff; }
 
-    /* --- Home Page --- */
     .home-page { text-align: center; padding: 6rem 1rem; max-width: 800px; margin: 0 auto; }
     .home-page img { width: 180px; height: 180px; border-radius: 50%; margin-bottom: 2rem; filter: grayscale(100%); }
     .home-page h2 { font-family: 'Rubik Wet Paint', cursive; font-size: 3.5rem; color: #fff; text-shadow: 0 0 20px rgba(255,255,255,0.2); margin-bottom: 1.5rem; }
@@ -162,7 +154,6 @@
     .home-btn { display: inline-block; background: var(--primary); color: #fff; text-decoration: none; padding: 1rem 3rem; border-radius: 8px; font-weight: 900; font-size: 1.2rem; transition: 0.3s; box-shadow: 0 4px 15px rgba(88,101,242,0.4); }
     .home-btn:hover { background: var(--primary-hover); transform: translateY(-3px); }
 
-    /* --- Modals (ללא קווים) --- */
     .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: grid; place-items: center; z-index: 100; padding: 1rem; backdrop-filter: blur(10px); }
     .modal[hidden], .panel [hidden] { display: none !important; }
     .panel { background: #111; border: none; border-radius: 16px; padding: 2.5rem; width: min(500px, 100%); position: relative; display: flex; flex-direction: column; gap: 1.2rem; box-shadow: 0 20px 50px rgba(0,0,0,0.8); }
@@ -178,62 +169,32 @@
 
     .item-panel { width: min(650px, 95%); padding: 0; overflow: hidden; gap: 0; }
     
-    /* --- תיקון התמונה בחלון הפופאפ --- */
-    .item-image { 
-        height: 350px; 
-        background-color: #000; 
-        background-repeat: no-repeat;
-        background-position: center center;
-        background-size: contain; /* התמונה תוצג בשלמותה */
-        display: flex; align-items: center; justify-content: center; 
-    }
+    .item-image { height: 350px; background-color: #000; background-repeat: no-repeat; background-position: center center; background-size: contain; display: flex; align-items: center; justify-content: center; }
     .item-image iframe { width: 100%; height: 100%; border: none; }
     .item-details { padding: 2rem; display: flex; flex-direction: column; gap: 1.2rem; }
     .item-details h2 { font-size: 2rem; font-family: 'Rubik Wet Paint', cursive; }
 
-    /* --- תמיכה ופניות (ללא קווים) --- */
-    .float-btn { 
-        position: fixed; bottom: 30px; left: 30px; 
-        background: var(--primary); color: #fff; border: none; 
-        width: 65px; height: 65px; border-radius: 50%; 
-        display: flex; align-items: center; justify-content: center;
-        box-shadow: 0 4px 20px rgba(88,101,242,0.4); z-index: 90; 
-        cursor: pointer; transition: 0.3s; 
-    }
+    .float-btn { position: fixed; bottom: 30px; left: 30px; background: var(--primary); color: #fff; border: none; width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(88,101,242,0.4); z-index: 90; cursor: pointer; transition: 0.3s; }
     .float-btn:hover { transform: translateY(-5px) scale(1.05); background: var(--primary-hover); }
     .float-btn svg { width: 30px; height: 30px; fill: none; stroke: currentColor; stroke-width: 2; }
 
-    .support-widget {
-        position: fixed; bottom: 110px; left: 30px; width: 380px; height: 600px;
-        background: #111; border: none; border-radius: 16px;
-        box-shadow: 0 10px 40px rgba(0,0,0,0.8);
-        display: flex; flex-direction: column; z-index: 95; overflow: hidden;
-    }
+    .support-widget { position: fixed; bottom: 110px; left: 30px; width: 380px; height: 600px; background: #111; border: none; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.8); display: flex; flex-direction: column; z-index: 95; overflow: hidden; }
     .support-widget[hidden] { display: none !important; }
 
-    .widget-header {
-        background: #1a1a1a; padding: 1.2rem; display: flex; justify-content: space-between; align-items: center;
-    }
+    .widget-header { background: #1a1a1a; padding: 1.2rem; display: flex; justify-content: space-between; align-items: center; }
     .widget-header h3 { font-size: 1.1rem; color: #fff; font-weight: 700; }
     .widget-header button { background: none; border: none; color: #888; cursor: pointer; font-size: 1.2rem; }
     .widget-header button:hover { color: #fff; }
 
     .widget-body { flex: 1; overflow-y: auto; padding: 1.2rem; display: flex; flex-direction: column; gap: 1rem; }
 
-    .widget-nav {
-        display: flex; background: #1a1a1a; padding: 0.8rem; justify-content: space-around;
-    }
-    .widget-nav button {
-        background: none; border: none; color: #888; display: flex; flex-direction: column; align-items: center; gap: 5px;
-        font-size: 0.75rem; font-family: inherit; cursor: pointer; transition: 0.2s; padding: 0.5rem;
-    }
+    .widget-nav { display: flex; background: #1a1a1a; padding: 0.8rem; justify-content: space-around; }
+    .widget-nav button { background: none; border: none; color: #888; display: flex; flex-direction: column; align-items: center; gap: 5px; font-size: 0.75rem; font-family: inherit; cursor: pointer; transition: 0.2s; padding: 0.5rem; }
     .widget-nav button.active { color: var(--primary); }
     .widget-nav button:hover { color: #fff; }
     .widget-nav svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 2; }
 
-    .ticket-card {
-        background: #1a1a1a; border-radius: 8px; padding: 1rem; cursor: pointer; transition: 0.2s;
-    }
+    .ticket-card { background: #1a1a1a; border-radius: 8px; padding: 1rem; cursor: pointer; transition: 0.2s; }
     .ticket-card:hover { background: #222; }
     .ticket-card.closed { opacity: 0.6; }
     .ticket-card h4 { font-size: 0.95rem; color: #fff; margin-bottom: 0.3rem; }
@@ -241,13 +202,9 @@
     
     .new-ticket-form { display: flex; flex-direction: column; gap: 0.8rem; padding: 1rem; background: #000; border-radius: 8px; }
     .new-ticket-form h4 { font-size: 0.9rem; color: #fff; margin-bottom: 0.5rem; }
-    .new-ticket-form input, .new-ticket-form textarea {
-        background: #111; border: none; border-radius: 6px; padding: 0.8rem; color: #fff; font-family: inherit; font-size: 0.85rem; outline: none;
-    }
+    .new-ticket-form input, .new-ticket-form textarea { background: #111; border: none; border-radius: 6px; padding: 0.8rem; color: #fff; font-family: inherit; font-size: 0.85rem; outline: none; }
     .new-ticket-form input:focus, .new-ticket-form textarea:focus { box-shadow: 0 0 0 2px var(--primary); }
-    .new-ticket-form button {
-        background: var(--primary); color: #fff; border: none; border-radius: 6px; padding: 0.8rem; font-weight: 700; cursor: pointer; transition: 0.2s;
-    }
+    .new-ticket-form button { background: var(--primary); color: #fff; border: none; border-radius: 6px; padding: 0.8rem; font-weight: 700; cursor: pointer; transition: 0.2s; }
     .new-ticket-form button:hover { background: var(--primary-hover); }
 
     .chat-messages { flex: 1; overflow-y: auto; padding: 1rem 0; display: flex; flex-direction: column; gap: 1rem; }
@@ -307,7 +264,6 @@
     <div class="brand"><img src="joker.webp" alt=""><h1>JOKER<span>-SHOP</span></h1></div>
     <p class="slogan">סקריפטים, מפות, בגדים ורכבים ל-FiveM</p>
     <div style="display:flex; gap:10px;">
-        <button id="uploadBtn" class="ghost" onclick="openAddModal()">העלאת קובץ</button>
         <button id="adminBtn" class="ghost" onclick="openLoginModal()">התחברות מנהל</button>
     </div>
 </header>
@@ -343,7 +299,6 @@
     </main>
 </div>
 
-<!-- חלון מוצר -->
 <div id="itemModal" class="modal" hidden>
     <div class="panel item-panel">
         <button class="close" id="closeItemModal">✕</button>
@@ -357,7 +312,6 @@
     </div>
 </div>
 
-<!-- חלון התחברות מנהל -->
 <div id="loginModal" class="modal" hidden>
     <div class="panel">
         <button class="close" onclick="document.getElementById('loginModal').hidden = true">✕</button>
@@ -369,7 +323,6 @@
     </div>
 </div>
 
-<!-- חלון ניהול / עריכה -->
 <div id="modal" class="modal" hidden>
     <div class="panel">
         <button class="close" id="closeModal">✕</button>
@@ -399,452 +352,7 @@
 </div>
 
 <script>
-    const CATS = ['בית', 'הכל', 'מפות','סקריפטים','בגדים','מודים','רכבים','תוכנות','אחר'];
-    const ICONS = {
-     'בית':'<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>',
-     'הכל':'<rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>',
-     'מפות':'<path d="M3 21V9l9-6 9 6v12z"/><path d="M9 21v-6h6v6"/>',
-     'סקריפטים':'<path d="m8 8-5 4 5 4M16 8l5 4-5 4M14 5l-4 14"/>',
-     'בגדים':'<path d="M8 3 3 6l2 4 3-1v12h8V9l3 1 2-4-5-3a4 4 0 0 1-8 0z"/>',
-     'מודים':'<path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.5-.5-.5-2.5z"/>',
-     'רכבים':'<path d="M5 17h14M3 13l2-6h14l2 6v4H3z"/><circle cx="7.5" cy="17" r="1.5"/><circle cx="16.5" cy="17" r="1.5"/>',
-     'תוכנות':'<rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/>',
-     'אחר':'<circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 .9-1 1.7M12 17h.01"/>'
-    };
-
-    let items = [], active = 'בית', token = localStorage.getItem('jtoken') || '', isAdmin = false, currentTicketId = null;
-    const $ = id => document.getElementById(id);
-
-    // בדיקת התחברות מנהל
-    fetch('/api/me', { headers: { 'Authorization': `Bearer ${token}` } })
-      .then(r => r.json())
-      .then(user => {
-        if (user && user.isAdmin) {
-            isAdmin = true;
-            $('uploadBtn').style.display = 'none';
-            $('adminBtn').textContent = 'הוסף מוצר';
-            $('adminBtn').onclick = openAddModal;
-            $('navHistory').style.display = 'flex';
-        }
-        load(); 
-        showSection('home');
-    }).catch(() => { load(); showSection('home'); });
-
-    async function load() { 
-        try {
-            const res = await fetch('/api/items');
-            if(!res.ok) throw new Error();
-            items = await res.json(); 
-            render(); 
-        } catch (e) {
-            $('grid').innerHTML = '<p class="empty">שגיאה בטעינת הנתונים.</p>';
-        }
-    }
-
-    function render() {
-        $('cats').innerHTML = CATS.map(c => {
-            let n = c === 'בית' ? '' : (c === 'הכל' ? items.length : items.filter(i => i.category === c).length);
-            return `<button class="${c === active ? 'on' : ''}" data-c="${c}"><svg viewBox="0 0 24 24">${ICONS[c]}</svg>${c}${n !== '' ? `<em>${n}</em>` : ''}</button>`;
-        }).join('');
-
-        if (active === 'בית' && !$('search').value.trim()) {
-            $('homePage').style.display = 'block';
-            $('grid').style.display = 'none';
-            $('title').textContent = 'בית';
-            $('count').textContent = '';
-            return;
-        }
-
-        $('homePage').style.display = 'none';
-        $('grid').style.display = 'grid';
-
-        const q = $('search').value.trim().toLowerCase();
-        const s = $('sort').value;
-        
-        let list = items.filter(i => {
-            let matchCat = true;
-            if (q) {
-                matchCat = true;
-            } else {
-                matchCat = (active === 'הכל' || i.category === active);
-            }
-
-            const matchSearch = (i.title + ' ' + i.desc).toLowerCase().includes(q);
-            return matchCat && matchSearch;
-        });
-
-        list.sort((a, b) => {
-            if (s === 'old') return a.date - b.date;
-            if (s === 'az') return a.title.localeCompare(b.title, 'he');
-            return b.date - a.date;
-        });
-        
-        $('title').textContent = q ? 'תוצאות חיפוש עבור: ' + q : active;
-        $('count').textContent = list.length + ' תוצאות';
-
-        $('grid').innerHTML = list.length ? list.map(i => {
-            let bgImage = '';
-            if (i.image) {
-                bgImage = i.image;
-            } else if (i.videoLink) {
-                const ytMatch = i.videoLink.match(/(?:youtu\.be\/|youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i);
-                if (ytMatch && ytMatch[1]) bgImage = `https://img.youtube.com/vi/${ytMatch[1]}/maxresdefault.jpg`;
-            }
-
-            const adminActions = isAdmin ? `
-                <div class="admin-card-actions">
-                    <button onclick="event.stopPropagation(); openEditModal('${i.id}')" title="ערוך">✎</button>
-                    <button class="del" onclick="event.stopPropagation(); deleteItem('${i.id}')" title="מחק">🗑</button>
-                </div>
-            ` : '';
-
-            return `
-            <article class="card" data-id="${i.id}">
-              ${adminActions}
-              <div class="pic" ${bgImage ? `style="background-image:url('${bgImage}')"` : ''}></div>
-              <div class="in">
-                  <span class="tag">${esc(i.category)}</span>
-                  <h3>${esc(i.title)}</h3>
-                  <p>${esc(i.desc)}</p>
-                  <button class="btn open-item-btn">לפרטים והורדה</button>
-              </div>
-            </article>`;
-        }).join('') : '<p class="empty">לא נמצאו מוצרים תואמים.</p>';
-    }
-
-    const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-
-    $('cats').onclick = e => { if (e.target.dataset.c || e.target.parentElement.dataset.c) { 
-        active = e.target.dataset.c || e.target.parentElement.dataset.c; 
-        $('search').value = '';
-        render(); 
-    } };
-    $('search').oninput = render;
-    $('sort').onchange = render;
-    $('fCat').innerHTML = CATS.filter(c => c !== 'בית' && c !== 'הכל').map(c => `<option>${c}</option>`).join('');
-
-    $('grid').onclick = async e => {
-        const card = e.target.closest('.card');
-        if (card) {
-            const id = card.dataset.id;
-            const item = items.find(i => i.id === id);
-            if (item) {
-                if (item.videoLink) {
-                    let videoId = '';
-                    const ytMatch = item.videoLink.match(/(?:youtu\.be\/|youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i);
-                    if (ytMatch && ytMatch[1]) videoId = ytMatch[1];
-                    
-                    if (videoId) {
-                        $('itemImage').innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen></iframe>`;
-                    } else {
-                        $('itemImage').innerHTML = `<div style="color:#fff;">קישור וידאו לא תקין</div>`;
-                    }
-                    $('itemImage').style.backgroundImage = 'none';
-                } else {
-                    $('itemImage').innerHTML = '';
-                    $('itemImage').style.backgroundImage = item.image ? `url('${item.image}')` : 'none';
-                }
-
-                $('itemTag').textContent = item.category;
-                $('itemTitle').textContent = item.title;
-                $('itemDesc').textContent = item.desc;
-                
-                $('itemLink').href = item.link || '#';
-                $('itemLink').removeAttribute('download');
-                
-                $('itemModal').hidden = false;
-            }
-        }
-    };
-    $('closeItemModal').onclick = () => $('itemModal').hidden = true;
-
-    // --- התחברות מנהל ---
-    window.openLoginModal = () => {
-        $('loginModal').hidden = false;
-    };
-
-    $('loginForm').onsubmit = async e => {
-        e.preventDefault();
-        const pass = $('adminPass').value;
-        const res = await fetch('/api/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ password: pass })
-        });
-        const data = await res.json();
-        if (res.ok) {
-            localStorage.setItem('jtoken', data.token);
-            location.reload();
-        } else {
-            alert('סיסמה שגויה');
-        }
-    };
-
-    // --- ניהול (הוספה ועריכה) ---
-    window.openAddModal = () => {
-        $('modalTitle').textContent = 'הוספת מוצר';
-        $('submitBtn').textContent = 'פרסם';
-        $('addBox').reset();
-        $('fId').value = '';
-        $('currentImageInfo').style.display = 'none';
-        $('modal').hidden = false;
-        $('msg').textContent = '';
-    };
-
-    window.openEditModal = (id) => {
-        const item = items.find(i => i.id === id);
-        if (!item) return;
-        
-        $('modalTitle').textContent = 'עריכת מוצר';
-        $('submitBtn').textContent = 'שמור שינויים';
-        $('fId').value = item.id;
-        $('fTitle').value = item.title;
-        $('fCat').value = item.category;
-        $('fLink').value = item.link || '';
-        $('fDesc').value = item.desc || '';
-        $('fVideo').value = item.videoLink || '';
-        
-        $('fImg').value = '';
-        $('clearImgBtn').style.display = 'none';
-
-        if (item.image) {
-            $('currentImageInfo').textContent = `תמונה נוכחית קיימת (העלה חדשה כדי להחליף)`;
-            $('currentImageInfo').style.display = 'block';
-        } else {
-            $('currentImageInfo').style.display = 'none';
-        }
-
-        $('modal').hidden = false;
-        $('msg').textContent = '';
-    };
-
-    $('closeModal').onclick = () => $('modal').hidden = true;
-
-    // --- מחיקת מוצר ---
-    window.deleteItem = async (id) => {
-        if (!confirm('האם אתה בטוח שברצונך למחוק מוצר זה?')) return;
-        try {
-            const res = await fetch('/api/items/' + id, {
-                method: 'DELETE',
-                headers: { 'Authorization': `Bearer ${token}` }
-            });
-            if (res.ok) {
-                load();
-            } else {
-                alert('שגיאה במחיקה');
-            }
-        } catch (e) {
-            alert('שגיאת תקשורת');
-        }
-    };
-
-    // --- שליחת טופס (הוספה או עדכון) ---
-    $('addBox').onsubmit = async e => {
-      e.preventDefault();
-      
-      const toBase64 = file => new Promise((resolve, reject) => {
-          const reader = new FileReader(); 
-          reader.readAsDataURL(file);
-          reader.onload = () => resolve(reader.result); 
-          reader.onerror = error => reject(error);
-      });
-      
-      let imageBase64 = '';
-      
-      try {
-          if ($('fImg').files[0]) {
-              imageBase64 = await toBase64($('fImg').files[0]);
-          }
-      } catch (err) {
-          return $('msg').textContent = 'שגיאה בקריאת התמונה.';
-      }
-
-      const isEdit = !!$('fId').value;
-      if (!$('fLink').value) return $('msg').textContent = 'חייב לשים קישור להורדה';
-      if (!$('fTitle').value) return $('msg').textContent = 'חייב לכתוב שם למוצר';
-
-      $('msg').textContent = isEdit ? 'שומר...' : 'מעלה... אנא המתן.';
-
-      try {
-          const url = isEdit ? '/api/items/' + $('fId').value : '/api/items';
-          const method = isEdit ? 'PUT' : 'POST';
-
-          const r = await fetch(url, { 
-              method: method, 
-              headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }, 
-              body: JSON.stringify({ 
-                  title: $('fTitle').value, 
-                  category: $('fCat').value, 
-                  link: $('fLink').value, 
-                  desc: $('fDesc').value, 
-                  videoLink: $('fVideo').value, 
-                  image: imageBase64
-              }) 
-          });
-          
-          const data = await r.json();
-          
-          if (r.ok) { 
-              e.target.reset(); 
-              $('fId').value = '';
-              $('clearImgBtn').style.display = 'none';
-              $('currentImageInfo').style.display = 'none';
-              $('modal').hidden = true; 
-              load(); 
-          } else { 
-              $('msg').textContent = data.error || 'שגיאה בשמירה.'; 
-          }
-      } catch (err) {
-          $('msg').textContent = 'שגיאת תקשורת עם השרת.';
-      }
-    };
-
-    // --- מערכת פניות (צ'אט צף) ---
-    function toggleTickets() {
-        const widget = $('supportWidget');
-        if (widget.hidden) {
-            widget.hidden = false;
-            showSection('home');
-        } else {
-            widget.hidden = true;
-        }
-    }
-
-    function showSection(section) {
-        document.querySelectorAll('.widget-nav button').forEach(b => b.classList.remove('active'));
-        if (section === 'home') $('navHome').classList.add('active');
-        if (section === 'history') $('navHistory').classList.add('active');
-        if (section === 'help') $('navHelp').classList.add('active');
-
-        const content = $('widgetContent');
-
-        if (section === 'home') {
-            content.innerHTML = `
-                <div class="new-ticket-form">
-                    <h4>פתיחת פנייה חדשה</h4>
-                    <input id="tName" placeholder="השם שלך" required>
-                    <input id="tSubject" placeholder="נושא הפנייה" required>
-                    <textarea id="tMessage" placeholder="פרט את הבעיה..." rows="4" required></textarea>
-                    <button onclick="createTicket()">שלח פנייה</button>
-                </div>
-            `;
-        } 
-        else if (section === 'history') {
-            content.innerHTML = `<div id="ticketListContainer" style="display:flex; flex-direction:column; gap:0.8rem;">טוען...</div>`;
-            loadTickets();
-        } 
-        else if (section === 'help') {
-            content.innerHTML = `
-                <div style="color:#ccc; font-size:0.9rem; line-height:1.6; padding:1rem;">
-                    <h4 style="color:#fff; margin-bottom:1rem;">איך אפשר לעזור?</h4>
-                    <p>ברוכים הבאים למערכת התמיכה של JOKER SHOP.</p>
-                    <p style="margin-top:1rem;">• לפתיחת פנייה חדשה, לחץ על לשונית "פתיחת פנייה" ומלא את הטופס.</p>
-                    <p style="margin-top:2rem; color:#888;">נשמח לעזור בכל בעיה!</p>
-                </div>
-            `;
-        }
-    }
-
-    async function loadTickets() {
-        const res = await fetch('/api/tickets', { headers: { 'Authorization': `Bearer ${token}` } });
-        const tickets = await res.json();
-        
-        const container = $('ticketListContainer');
-        if (!container) return;
-
-        if (tickets.length === 0) {
-            container.innerHTML = '<div style="color:#888; text-align:center; padding: 1rem; font-size:0.9rem;">אין פניות קודמות.</div>';
-            return;
-        }
-
-        container.innerHTML = tickets.map(t => `
-            <div class="ticket-card ${t.status === 'closed' ? 'closed' : ''}" onclick="viewTicket('${t.id}')">
-                <h4>${esc(t.subject)}</h4>
-                <p>${t.status === 'open' ? '🟢 פתוח' : '🔴 סגור'} | ${new Date(t.date).toLocaleDateString('he-IL')}</p>
-            </div>
-        `).join('');
-    }
-
-    async function createTicket() {
-        const name = $('tName').value.trim();
-        const subject = $('tSubject').value.trim();
-        const message = $('tMessage').value.trim();
-        if (!name || !subject || !message) return alert('מלא את כל השדות');
-
-        const res = await fetch('/api/tickets', { 
-            method: 'POST', 
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name, subject, message }) 
-        });
-        if (res.ok) {
-            $('tName').value = ''; $('tSubject').value = ''; $('tMessage').value = '';
-            alert('הפנייה נשלחה בהצלחה!');
-        } else { alert('שגיאה'); }
-    }
-
-    async function viewTicket(id) {
-        currentTicketId = id;
-        const content = $('widgetContent');
-        
-        const res = await fetch('/api/tickets', { headers: { 'Authorization': `Bearer ${token}` } });
-        const tickets = await res.json();
-        const ticket = tickets.find(t => t.id === id);
-        if (!ticket) return;
-
-        const canClose = isAdmin && ticket.status === 'open';
-        
-        content.innerHTML = `
-            <div style="display:flex; flex-direction:column; height:100%;">
-                <div style="padding-bottom:0.5rem; display:flex; justify-content:space-between; align-items:center;">
-                    <button onclick="showSection('history')" style="background:none; border:none; color:#fff; cursor:pointer; font-size:0.9rem;">&rarr; חזור</button>
-                    <span style="font-size:0.8rem; color:#888;">${ticket.subject}</span>
-                    ${canClose ? `<button onclick="closeTicketAction()" style="background:none; border:none; color:#ff4d4d; cursor:pointer; font-size:0.8rem;">סגור פנייה</button>` : ''}
-                </div>
-                <div id="chatMessages" style="flex:1; overflow-y:auto; padding:1rem 0; display:flex; flex-direction:column; gap:1rem;">
-                    ${ticket.messages.map(m => `
-                        <div class="msg ${m.isAdmin ? 'admin' : 'user'}">
-                            <div class="msg-meta">${esc(m.sender)} ${m.isAdmin ? '(מנהל)' : ''}</div>
-                            <div>${esc(m.text)}</div>
-                        </div>
-                    `).join('')}
-                </div>
-                ${ticket.status === 'open' ? `
-                <div class="chat-input">
-                    <textarea id="cMessage" placeholder="כתוב הודעה..." rows="2"></textarea>
-                    <button onclick="sendReply()">שלח</button>
-                </div>` : ''}
-            </div>
-        `;
-        
-        setTimeout(() => {
-            const chat = $('chatMessages');
-            if(chat) chat.scrollTop = chat.scrollHeight;
-        }, 100);
-    }
-
-    async function sendReply() {
-        const text = $('cMessage').value.trim();
-        if (!text) return;
-        const res = await fetch('/api/tickets/' + currentTicketId + '/reply', {
-            method: 'POST',
-            headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
-            body: JSON.stringify({ message: text })
-        });
-        if (res.ok) {
-            viewTicket(currentTicketId);
-        }
-    }
-
-    async function closeTicketAction() {
-        if (!confirm('לסגור את הפנייה?')) return;
-        const res = await fetch('/api/tickets/' + currentTicketId + '/close', {
-            method: 'POST',
-            headers: { 'Authorization': `Bearer ${token}` }
-        });
-        if (res.ok) {
-            showSection('history');
-        }
-    }
+const CATS=['בית','הכל','מפות','סקריפטים','בגדים','מודים','רכבים','תוכנות','אחר'],ICONS={'בית':'<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>','הכל':'<rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>','מפות':'<path d="M3 21V9l9-6 9 6v12z"/><path d="M9 21v-6h6v6"/>','סקריפטים':'<path d="m8 8-5 4 5 4M16 8l5 4-5 4M14 5l-4 14"/>','בגדים':'<path d="M8 3 3 6l2 4 3-1v12h8V9l3 1 2-4-5-3a4 4 0 0 1-8 0z"/>','מודים':'<path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.5-.5-.5-2.5z"/>','רכבים':'<path d="M5 17h14M3 13l2-6h14l2 6v4H3z"/><circle cx="7.5" cy="17" r="1.5"/><circle cx="16.5" cy="17" r="1.5"/>','תוכנות':'<rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/>','אחר':'<circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 .9-1 1.7M12 17h.01"/>'};let items=[],active='בית',token=localStorage.getItem('jtoken')||'',isAdmin=!1,currentTicketId=null;const $=id=>document.getElementById(id);fetch('/api/me',{headers:{Authorization:`Bearer ${token}`}}).then(r=>r.json()).then(user=>{if(user&&user.isAdmin){isAdmin=!0,$('adminBtn').textContent='הוסף מוצר',$('adminBtn').onclick=openAddModal,$('navHistory').style.display='flex'}load(),showSection('home')}).catch(()=>{load(),showSection('home')});async function load(){try{const res=await fetch('/api/items');if(!res.ok)throw new Error;items=await res.json(),render()}catch(e){$('grid').innerHTML='<p class="empty">שגיאה בטעינת הנתונים.</p>'}}function render(){$('cats').innerHTML=CATS.map(c=>{let n=c==='בית'?'':c==='הכל'?items.length:items.filter(i=>i.category===c).length;return`<button class="${c===active?'on':''}" data-c="${c}"><svg viewBox="0 0 24 24">${ICONS[c]}</svg>${c}${n!==''?`<em>${n}</em>`:''}</button>`}).join('');if(active==='בית'&&!$('search').value.trim()){$('homePage').style.display='block',$('grid').style.display='none',$('title').textContent='בית',$('count').textContent='';return}$('homePage').style.display='none',$('grid').style.display='grid';const q=$('search').value.trim().toLowerCase(),s=$('sort').value;let list=items.filter(i=>{let matchCat=!0;if(q){matchCat=!0}else{matchCat=active==='הכל'||i.category===active}const matchSearch=(i.title+' '+i.desc).toLowerCase().includes(q);return matchCat&&matchSearch});list.sort((a,b)=>s==='old'?a.date-b.date:s==='az'?a.title.localeCompare(b.title,'he'):b.date-a.date),$('title').textContent=q?'תוצאות חיפוש עבור: '+q:active,$('count').textContent=list.length+' תוצאות',$('grid').innerHTML=list.length?list.map(i=>{let bgImage='';if(i.image){bgImage=i.image}else if(i.videoLink){const ytMatch=i.videoLink.match(/(?:youtu\.be\/|youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i);if(ytMatch&&ytMatch[1])bgImage=`https://img.youtube.com/vi/${ytMatch[1]}/maxresdefault.jpg`}const adminActions=isAdmin?`<div class="admin-card-actions"><button onclick="event.stopPropagation(); openEditModal('${i.id}')" title="ערוך">✎</button><button class="del" onclick="event.stopPropagation(); deleteItem('${i.id}')" title="מחק">🗑</button></div>`:'';return`<article class="card" data-id="${i.id}">${adminActions}<div class="pic" ${bgImage?`style="background-image:url('${bgImage}')"`:''}></div><div class="in"><span class="tag">${esc(i.category)}</span><h3>${esc(i.title)}</h3><p>${esc(i.desc)}</p><button class="btn open-item-btn">לפרטים והורדה</button></div></article>`}).join(''):'<p class="empty">לא נמצאו מוצרים תואמים.</p>'}const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));$('cats').onclick=e=>{if(e.target.dataset.c||e.target.parentElement.dataset.c){active=e.target.dataset.c||e.target.parentElement.dataset.c,$('search').value='',render()}},$('search').oninput=render,$('sort').onchange=render,$('fCat').innerHTML=CATS.filter(c=>c!=='בית'&&c!=='הכל').map(c=>`<option>${c}</option>`).join(''),$('grid').onclick=async e=>{const card=e.target.closest('.card');if(card){const id=card.dataset.id,item=items.find(i=>i.id===id);if(item){if(item.videoLink){let videoId='';const ytMatch=item.videoLink.match(/(?:youtu\.be\/|youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i);if(ytMatch&&ytMatch[1])videoId=ytMatch[1];if(videoId){$('itemImage').innerHTML=`<iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen></iframe>`}else{$('itemImage').innerHTML=`<div style="color:#fff;">קישור וידאו לא תקין</div>`}$('itemImage').style.backgroundImage='none'}else{$('itemImage').innerHTML='',$('itemImage').style.backgroundImage=item.image?`url('${item.image}')`:'none'}$('itemTag').textContent=item.category,$('itemTitle').textContent=item.title,$('itemDesc').textContent=item.desc,$('itemLink').href=item.link||'#',$('itemLink').removeAttribute('download'),$('itemModal').hidden=!1}}},$('closeItemModal').onclick=()=>$('itemModal').hidden=!0,window.openLoginModal=()=>{$('loginModal').hidden=!1},$('loginForm').onsubmit=async e=>{e.preventDefault();const pass=$('adminPass').value,res=await fetch('/api/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({password:pass})}),data=await res.json();if(res.ok){localStorage.setItem('jtoken',data.token),location.reload()}else{alert('סיסמה שגויה')}},window.openAddModal=()=>{$('modalTitle').textContent='הוספת מוצר',$('submitBtn').textContent='פרסם',$('addBox').reset(),$('fId').value='',$('currentImageInfo').style.display='none',$('modal').hidden=!1,$('msg').textContent=''},window.openEditModal=id=>{const item=items.find(i=>i.id===id);if(!item)return;$('modalTitle').textContent='עריכת מוצר',$('submitBtn').textContent='שמור שינויים',$('fId').value=item.id,$('fTitle').value=item.title,$('fCat').value=item.category,$('fLink').value=item.link||'',$('fDesc').value=item.desc||'',$('fVideo').value=item.videoLink||'',$('fImg').value='',$('clearImgBtn').style.display='none';if(item.image){$('currentImageInfo').textContent=`תמונה נוכחית קיימת (העלה חדשה כדי להחליף)`,$('currentImageInfo').style.display='block'}else{$('currentImageInfo').style.display='none'}$('modal').hidden=!1,$('msg').textContent=''},$('closeModal').onclick=()=>$('modal').hidden=!0,window.deleteItem=async id=>{if(!confirm('האם אתה בטוח שברצונך למחוק מוצר זה?'))return;try{const res=await fetch('/api/items/'+id,{method:'DELETE',headers:{Authorization:`Bearer ${token}`}});if(res.ok){load()}else{alert('שגיאה במחיקה')}}catch(e){alert('שגיאת תקשורת')}},$('addBox').onsubmit=async e=>{e.preventDefault();const toBase64=file=>new Promise((resolve,reject)=>{const reader=new FileReader();reader.readAsDataURL(file),reader.onload=()=>resolve(reader.result),reader.onerror=error=>reject(error)});let imageBase64='';try{if($('fImg').files[0]){imageBase64=await toBase64($('fImg').files[0])}}catch(err){return $('msg').textContent='שגיאה בקריאת התמונה.'}const isEdit=!!$('fId').value;if(!$('fLink').value)return $('msg').textContent='חייב לשים קישור להורדה';if(!$('fTitle').value)return $('msg').textContent='חייב לכתוב שם למוצר';$('msg').textContent=isEdit?'שומר...':'מעלה... אנא המתן.';try{const url=isEdit?'/api/items/'+$('fId').value:'/api/items',method=isEdit?'PUT':'POST',r=await fetch(url,{method:method,headers:{Authorization:`Bearer ${token}`,'Content-Type':'application/json'},body:JSON.stringify({title:$('fTitle').value,category:$('fCat').value,link:$('fLink').value,desc:$('fDesc').value,videoLink:$('fVideo').value,image:imageBase64})}),data=await r.json();if(r.ok){e.target.reset(),$('fId').value='',$('clearImgBtn').style.display='none',$('currentImageInfo').style.display='none',$('modal').hidden=!0,load()}else{$('msg').textContent=data.error||'שגיאה בשמירה.'}}catch(err){$('msg').textContent='שגיאת תקשורת עם השרת.'}};function toggleTickets(){const widget=$('supportWidget');if(widget.hidden){widget.hidden=!1,showSection('home')}else{widget.hidden=!0}}function showSection(section){document.querySelectorAll('.widget-nav button').forEach(b=>b.classList.remove('active'));if(section==='home')$('navHome').classList.add('active');if(section==='history')$('navHistory').classList.add('active');if(section==='help')$('navHelp').classList.add('active');const content=$('widgetContent');if(section==='home'){content.innerHTML=`<div class="new-ticket-form"><h4>פתיחת פנייה חדשה</h4><input id="tName" placeholder="השם שלך" required><input id="tSubject" placeholder="נושא הפנייה" required><textarea id="tMessage" placeholder="פרט את הבעיה..." rows="4" required></textarea><button onclick="createTicket()">שלח פנייה</button></div>`}else if(section==='history'){content.innerHTML=`<div id="ticketListContainer" style="display:flex; flex-direction:column; gap:0.8rem;">טוען...</div>`,loadTickets()}else if(section==='help'){content.innerHTML=`<div style="color:#ccc; font-size:0.9rem; line-height:1.6; padding:1rem;"><h4 style="color:#fff; margin-bottom:1rem;">איך אפשר לעזור?</h4><p>ברוכים הבאים למערכת התמיכה של JOKER SHOP.</p><p style="margin-top:1rem;">• לפתיחת פנייה חדשה, לחץ על לשונית "פתיחת פנייה" ומלא את הטופס.</p><p style="margin-top:2rem; color:#888;">נשמח לעזור בכל בעיה!</p></div>`}}async function loadTickets(){const res=await fetch('/api/tickets',{headers:{Authorization:`Bearer ${token}`}}),tickets=await res.json(),container=$('ticketListContainer');if(!container)return;if(tickets.length===0){container.innerHTML='<div style="color:#888; text-align:center; padding: 1rem; font-size:0.9rem;">אין פניות קודמות.</div>';return}container.innerHTML=tickets.map(t=>`<div class="ticket-card ${t.status==='closed'?'closed':''}" onclick="viewTicket('${t.id}')"><h4>${esc(t.subject)}</h4><p>${t.status==='open'?'🟢 פתוח':'🔴 סגור'} | ${new Date(t.date).toLocaleDateString('he-IL')}</p></div>`).join('')}async function createTicket(){const name=$('tName').value.trim(),subject=$('tSubject').value.trim(),message=$('tMessage').value.trim();if(!name||!subject||!message)return alert('מלא את כל השדות');const res=await fetch('/api/tickets',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,subject,message})});if(res.ok){$('tName').value='',$('tSubject').value='',$('tMessage').value='',alert('הפנייה נשלחה בהצלחה!')}else{alert('שגיאה')}}async function viewTicket(id){currentTicketId=id;const content=$('widgetContent'),res=await fetch('/api/tickets',{headers:{Authorization:`Bearer ${token}`}}),tickets=await res.json(),ticket=tickets.find(t=>t.id===id);if(!ticket)return;const canClose=isAdmin&&ticket.status==='open';content.innerHTML=`<div style="display:flex; flex-direction:column; height:100%;"><div style="padding-bottom:0.5rem; display:flex; justify-content:space-between; align-items:center;"><button onclick="showSection('history')" style="background:none; border:none; color:#fff; cursor:pointer; font-size:0.9rem;">&rarr; חזור</button><span style="font-size:0.8rem; color:#888;">${ticket.subject}</span>${canClose?`<button onclick="closeTicketAction()" style="background:none; border:none; color:#ff4d4d; cursor:pointer; font-size:0.8rem;">סגור פנייה</button>`:''}</div><div id="chatMessages" style="flex:1; overflow-y:auto; padding:1rem 0; display:flex; flex-direction:column; gap:1rem;">${ticket.messages.map(m=>`<div class="msg ${m.isAdmin?'admin':'user'}"><div class="msg-meta">${esc(m.sender)} ${m.isAdmin?'(מנהל)':''}</div><div>${esc(m.text)}</div></div>`).join('')}</div>${ticket.status==='open'?`<div class="chat-input"><textarea id="cMessage" placeholder="כתוב הודעה..." rows="2"></textarea><button onclick="sendReply()">שלח</button></div>`:''}</div>`,setTimeout(()=>{const chat=$('chatMessages');if(chat)chat.scrollTop=chat.scrollHeight},100)}async function sendReply(){const text=$('cMessage').value.trim();if(!text)return;const res=await fetch('/api/tickets/'+currentTicketId+'/reply',{method:'POST',headers:{Authorization:`Bearer ${token}`,'Content-Type':'application/json'},body:JSON.stringify({message:text})});if(res.ok){viewTicket(currentTicketId)}}async function closeTicketAction(){if(!confirm('לסגור את הפנייה?'))return;const res=await fetch('/api/tickets/'+currentTicketId+'/close',{method:'POST',headers:{Authorization:`Bearer ${token}`}});if(res.ok){showSection('history')}}
 </script>
 </body>
 </html>
