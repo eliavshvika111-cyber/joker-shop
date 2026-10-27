@@ -1,1 +1,12 @@
-{"name":"joker-shop","version":"1.0.0","main":"server.js","scripts":{"start":"node server.js"},"dependencies":{"discord.js":"^14.27.0"}}
+{
+  "name": "joker-shop",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "mongodb": "^6.3.0",
+    "cloudinary": "^2.0.0"
+  }
+}
